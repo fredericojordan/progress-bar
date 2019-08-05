@@ -1,1 +1,1 @@
-web: python progress.py
+web: gunicorn progress:app
