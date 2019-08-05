@@ -5,7 +5,7 @@
     <stop offset="1" stop-opacity=".1"/>
   </linearGradient>
 
-  <rect rx="4" x="0" width="{{ title_width + progress_width }}" height="20" fill="#428bca"/>
+  <rect rx="4" x="0" width="{{ title_width + progress_width }}" height="20" fill="#{{ title_color }}"/>
   <rect rx="4" x="{{ title_width }}" width="{{ progress_width }}" height="20" fill="#555" />
   <rect rx="4" x="{{ title_width }}" width="{{ [progress/scale, 1] | min * progress_width | int }}" height="20" fill="{{ color }}" />
   {% if title %}
