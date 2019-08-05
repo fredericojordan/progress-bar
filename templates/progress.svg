@@ -7,9 +7,9 @@
 
   <rect rx="4" x="0" width="{{ title_width + progress_width }}" height="20" fill="#{{ title_color }}"/>
   <rect rx="4" x="{{ title_width }}" width="{{ progress_width }}" height="20" fill="#555" />
-  <rect rx="4" x="{{ title_width }}" width="{{ [progress/scale, 1] | min * progress_width | int }}" height="20" fill="{{ color }}" />
+  <rect rx="4" x="{{ title_width }}" width="{{ [progress/scale, 1] | min * progress_width | int }}" height="20" fill="{{ progress_color }}" />
   {% if title %}
-    <path fill="{{ color }}" d="M{{ title_width }} 0h4v20h-4z" />
+    <path fill="{{ progress_color }}" d="M{{ title_width }} 0h4v20h-4z" />
   {% endif %}
   <rect rx="4" width="{{ title_width + progress_width }}" height="20" fill="url(#a)" />
 

@@ -3,11 +3,13 @@ import os
 from flask import Flask, make_response, redirect, render_template, request
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "secret_l801#+#a&^1mz)_p&qyq51j51@20_74c-xi%&i)b*u_dt^2=2key")
+app.config["SECRET_KEY"] = os.environ.get(
+    "SECRET_KEY", "secret_l801#+#a&^1mz)_p&qyq51j51@20_74c-xi%&i)b*u_dt^2=2key"
+)
 
 
 def get_progress_color(progress, scale):
-    ratio = progress/scale
+    ratio = progress / scale
 
     if ratio < 0.3:
         return "#d9534f"
@@ -20,33 +22,32 @@ def get_progress_color(progress, scale):
 def get_template_fields(progress):
     title = request.args.get("title")
 
-    template_fields = {
+    scale = 100
+    try:
+        scale = int(request.args.get("scale"))
+    except ValueError:
+        pass
+
+    progress_width = 60 if title else 90
+    try:
+        progress_width = int(request.args.get("width"))
+    except ValueError:
+        pass
+
+    return {
         "title": title,
-        "title_width": 10 + 6*len(title) if title else 0,
+        "title_width": 10 + 6 * len(title) if title else 0,
         "title_color": request.args.get("color", "428bca"),
-        "scale": 100,
+        "scale": scale,
         "progress": progress,
-        "progress_width": 60 if title else 90,
+        "progress_width": progress_width,
+        "progress_color": get_progress_color(progress, scale),
         "suffix": request.args.get("suffix", "%"),
     }
 
-    try:
-        template_fields["progress_width"] = int(request.args.get("width"))
-    except:
-        pass
-
-    try:
-        template_fields["scale"] = int(request.args.get("scale"))
-    except:
-        pass
-
-    template_fields["color"] = get_progress_color(progress, template_fields["scale"])
-
-    return template_fields
-
 
 @app.route("/<int:progress>/")
-def getProgressSVG(progress):
+def get_progress_svg(progress):
     template_fields = get_template_fields(progress)
 
     template = render_template("progress.svg", **template_fields)
@@ -56,7 +57,7 @@ def getProgressSVG(progress):
     return response
 
 
-@app.route('/')
+@app.route("/")
 def redirect_to_github():
     return redirect("https://github.com/fredericojordan/progress-bar", code=302)
 
