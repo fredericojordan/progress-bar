@@ -25,13 +25,13 @@ def get_template_fields(progress):
     scale = 100
     try:
         scale = int(request.args.get("scale"))
-    except ValueError:
+    except (TypeError, ValueError):
         pass
 
     progress_width = 60 if title else 90
     try:
         progress_width = int(request.args.get("width"))
-    except ValueError:
+    except (TypeError, ValueError):
         pass
 
     return {
