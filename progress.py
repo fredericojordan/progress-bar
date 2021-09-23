@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, make_response, redirect, render_template, request
+from flask import Flask, make_response, redirect, render_template, request, send_from_directory
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get(
@@ -20,6 +20,10 @@ def get_progress_color(progress, scale):
 
 
 def get_template_fields(progress):
+    padding = 8
+    chinese_char_width = 11.167 # DejaVu Sans Mono
+    english_char_width = 6.628
+
     title = request.args.get("title")
 
     scale = 100
@@ -34,9 +38,18 @@ def get_template_fields(progress):
     except (TypeError, ValueError):
         pass
 
+    def title_width(title):
+        width = 0
+        for _char in title:
+            if '\u4e00' <= _char <= '\u9fa5':
+                width += chinese_char_width
+            else:
+                width += english_char_width
+        return padding + width
+
     return {
         "title": title,
-        "title_width": 10 + 6 * len(title) if title else 0,
+        "title_width": title_width(title) if title else 0,
         "title_color": request.args.get("color", "428bca"),
         "scale": scale,
         "progress": progress,
@@ -56,10 +69,13 @@ def get_progress_svg(progress):
     response.headers["Content-Type"] = "image/svg+xml"
     return response
 
+@app.route("/fonts/<filename>")
+def download(filename):
+    return send_from_directory(directory="fonts", filename=filename)
 
 @app.route("/")
 def redirect_to_github():
-    return redirect("https://github.com/fredericojordan/progress-bar", code=302)
+    return redirect("https://github.com/tuchengpanghu/progress-bar", code=302)
 
 
 if __name__ == "__main__":
