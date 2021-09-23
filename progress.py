@@ -75,7 +75,7 @@ def download(filename):
 
 @app.route("/")
 def redirect_to_github():
-    return redirect("https://github.com/tuchengpanghu/progress-bar", code=302)
+    return redirect("https://github.com/fredericojordan/progress-bar", code=302)
 
 
 if __name__ == "__main__":
