@@ -35,7 +35,8 @@
   <style type="text/css">
     @font-face {
       font-family: "DejaVu Sans Mono";
-      src: url("../fonts/DejaVuSansMono.ttf");
+      src: local("DejaVu Sans Mono"),
+           url("../fonts/DejaVuSansMono.ttf");
     }
   </style>
 </svg>
