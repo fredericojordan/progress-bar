@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask, make_response, redirect, render_template, request, send_from_directory
+from fontTools.ttLib import TTFont
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get(
@@ -20,9 +21,11 @@ def get_progress_color(progress, scale):
 
 
 def get_template_fields(progress):
+    font = TTFont('./fonts/Verdana.ttf')
+    cmap = font['cmap']
+    t = cmap.getcmap(3, 1).cmap
+    s = font.getGlyphSet()
     padding = 8
-    chinese_char_width = 11.167 # DejaVu Sans Mono
-    english_char_width = 6.628
 
     title = request.args.get("title")
 
@@ -38,18 +41,19 @@ def get_template_fields(progress):
     except (TypeError, ValueError):
         pass
 
-    def title_width(title):
-        width = 0
-        for _char in title:
-            if '\u4e00' <= _char <= '\u9fa5':
-                width += chinese_char_width
+    def title_width(text, pointSize):
+        total = 0
+        for c in text:
+            if ord(c) in t and t[ord(c)] in s:
+                total += s[t[ord(c)]].width
             else:
-                width += english_char_width
-        return padding + width
+                total += s['.notdef'].width
+        total = total*float(pointSize)/2048
+        return total + padding
 
     return {
         "title": title,
-        "title_width": title_width(title) if title else 0,
+        "title_width": title_width(title, 11) if title else 0,
         "title_color": request.args.get("color", "428bca"),
         "scale": scale,
         "progress": progress,
@@ -69,9 +73,11 @@ def get_progress_svg(progress):
     response.headers["Content-Type"] = "image/svg+xml"
     return response
 
+
 @app.route("/fonts/<filename>")
 def download(filename):
     return send_from_directory(directory="fonts", filename=filename)
+
 
 @app.route("/")
 def redirect_to_github():
