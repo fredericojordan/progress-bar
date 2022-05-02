@@ -33,7 +33,7 @@ def lambda_handler(event, context):
 
     try:
         return render_svg(event, int(event["pathParameters"]["progress"]))
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, KeyError):
         return redirect_to_github()
 
 
