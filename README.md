@@ -24,4 +24,7 @@ https://progress-bar.dev/7/?scale=10&title=mark&suffix=X
 ![Progress](https://progress-bar.dev/420/?scale=500&title=funds&width=200&color=babaca&suffix=$)
 https://progress-bar.dev/420/?scale=500&title=funds&width=120&color=babaca&suffix=$
 
+![Colorful](https://progress-bar.dev/58/?title=colorful&progress_background=ffc0cb&progress_number_color=000)
+https://progress-bar.dev/58/?title=colorful&progress_background=ffc0cb&progress_number_color=000
+
 Heavily inspired by the works of https://github.com/fehmicansaglam/progressed.io

@@ -6,7 +6,7 @@
   </linearGradient>
 
   <rect rx="4" x="0" width="{{ title_width + progress_width }}" height="20" fill="#{{ title_color }}"/>
-  <rect rx="4" x="{{ title_width }}" width="{{ progress_width }}" height="20" fill="#555" />
+  <rect rx="4" x="{{ title_width }}" width="{{ progress_width }}" height="20" fill="#{{ progress_background }}" />
   <rect rx="4" x="{{ title_width }}" width="{{ [progress/scale, 1] | min * progress_width | int }}" height="20" fill="{{ progress_color }}" />
   {% if title %}
     <path fill="{{ progress_color }}" d="M{{ title_width }} 0h4v20h-4z" />
@@ -24,7 +24,7 @@
     </g>
   {% endif %}
 
-  <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
+  <g fill="#{{ progress_number_color }}" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
     <text x="{{ progress_width/2 | int + title_width }}" y="15" fill="#010101" fill-opacity=".3">
       {{progress}}{{suffix}}
     </text>
