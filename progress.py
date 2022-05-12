@@ -42,6 +42,8 @@ def get_template_fields(progress):
         "progress": progress,
         "progress_width": progress_width,
         "progress_color": get_progress_color(progress, scale),
+        "progress_background": request.args.get("progress_background", "555"),
+        "progress_number_color": request.args.get("progress_number_color", "fff"),
         "suffix": request.args.get("suffix", "%"),
     }
 
