@@ -1,7 +1,7 @@
 # What is progress-bar.dev?
 
 ![Progress](https://progress-bar.dev/28/)
-https://progress-bar.dev/28/
+https://progress-bar.dev
 
 ![Progress](https://progress-bar.dev/28/?title=progress)
 https://progress-bar.dev/28/?title=progress
